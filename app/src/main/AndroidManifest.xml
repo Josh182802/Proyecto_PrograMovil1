@@ -13,6 +13,16 @@
         android:theme="@style/Theme.Reportes">
 
         <activity
+            android:name=".RecuperarContrasena"
+            android:exported="false" />
+
+        <activity
+            android:name=".DashboardActivity" />
+
+        <activity
+            android:name=".Reportes" />
+
+        <activity
             android:name=".MainActivity"
             android:exported="true">
 
@@ -23,10 +33,6 @@
             </intent-filter>
 
         </activity>
-
-        <activity android:name=".DashboardActivity"/>
-
-        <activity android:name=".Reportes"/>
 
     </application>
 

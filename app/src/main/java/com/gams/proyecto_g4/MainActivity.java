@@ -1,14 +1,15 @@
 package com.gams.proyecto_g4;
 
 import com.gams.proyecto_g4.dao.UsuarioDAO;
+import com.gams.proyecto_g4.dao.SesionDAO;
+
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.content.Intent;
 
 public class MainActivity extends Activity {
 
@@ -16,13 +17,29 @@ public class MainActivity extends Activity {
     Button btnIniciarSesion;
     TextView txtRecuperar;
 
-
+    UsuarioDAO usuarioDAO;
+    SesionDAO sesionDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Si tu XML se llama activity_main.xml, deja esta línea.
+        usuarioDAO = new UsuarioDAO(this);
+        sesionDAO = new SesionDAO(this);
+
+        if (sesionDAO.existeSesionActiva()) {
+
+            Intent intent = new Intent(
+                    MainActivity.this,
+                    DashboardActivity.class
+            );
+
+            startActivity(intent);
+            finish();
+
+            return;
+        }
+
         setContentView(R.layout.activity_main);
 
         edtUsuario = findViewById(R.id.edtUsuario);
@@ -30,60 +47,86 @@ public class MainActivity extends Activity {
         btnIniciarSesion = findViewById(R.id.btnIniciarSesion);
         txtRecuperar = findViewById(R.id.txtRecuperar);
 
-        btnIniciarSesion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                validarLogin();
-            }
+
+        btnIniciarSesion.setOnClickListener(view -> validarLogin());
+
+
+        txtRecuperar.setOnClickListener(view -> {
+
+            Intent intent = new Intent(
+                    MainActivity.this,
+                    RecuperarContrasena.class
+            );
+
+            startActivity(intent);
+
         });
 
-        txtRecuperar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Función de recuperación de contraseña", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
+
     private void validarLogin() {
-        String usuario = edtUsuario.getText().toString().trim();
-        String contrasena = edtContrasena.getText().toString().trim();
+
+        String usuario = edtUsuario.getText()
+                .toString()
+                .trim();
+
+        String contrasena = edtContrasena.getText()
+                .toString()
+                .trim();
+
 
         if (usuario.isEmpty() || contrasena.isEmpty()) {
 
-            Toast.makeText(MainActivity.this,
+            Toast.makeText(
+                    this,
                     "Debe ingresar usuario y contraseña",
-                    Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            return;
+        }
+
+
+        boolean valido = usuarioDAO.validarLogin(
+                usuario,
+                contrasena
+        );
+
+
+        if (valido) {
+
+            int idUsuario = usuarioDAO.obtenerIdUsuario(usuario);
+
+            if (idUsuario != -1) {
+
+                sesionDAO.crearSesion(idUsuario);
+
+            }
+
+            String rol = usuarioDAO.obtenerRol(usuario);
+
+            Intent intent = new Intent(
+                    MainActivity.this,
+                    DashboardActivity.class
+            );
+
+            intent.putExtra("usuario", usuario);
+            intent.putExtra("nivel", rol);
+
+            startActivity(intent);
+            finish();
+
 
         } else {
 
-            UsuarioDAO usuarioDAO = new UsuarioDAO(MainActivity.this);
+            Toast.makeText(
+                    this,
+                    "Credenciales inválidas",
+                    Toast.LENGTH_SHORT
+            ).show();
 
-            boolean valido = usuarioDAO.validarLogin(usuario, contrasena);
-
-            if (valido) {
-
-                abrirDashboard(usuario, "Usuario");
-
-            } else {
-
-                Toast.makeText(MainActivity.this,
-                        "Credenciales inválidas",
-                        Toast.LENGTH_SHORT).show();
-            }
         }
-    }
 
-    private void abrirDashboard(String usuario, String nivel) {
-        Toast.makeText(MainActivity.this, "Bienvenido " + nivel, Toast.LENGTH_SHORT).show();
-
-        Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
-        intent.putExtra("usuario", usuario);
-        intent.putExtra("nivel", nivel);
-        startActivity(intent);
     }
 }
-
-///Usuario: admin
-/// Contraseña: 1234
-/// Nivel: Administrador

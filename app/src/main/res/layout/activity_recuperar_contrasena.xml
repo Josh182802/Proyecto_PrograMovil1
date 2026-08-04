@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#191919">
+
+
+    <TextView
+        android:id="@+id/txtTituloRecuperar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recuperar contraseña"
+        android:textColor="#D92F2F"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="80dp"/>
+
+
+    <TextView
+        android:id="@+id/txtDescripcionRecuperar"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Ingresa tu correo electrónico registrado para solicitar la recuperación de tu contraseña."
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/txtTituloRecuperar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="25dp"/>
+
+
+    <EditText
+        android:id="@+id/edtCorreoRecuperar"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:hint="Correo electrónico"
+        android:inputType="textEmailAddress"
+        android:background="#FFFFFF"
+        android:padding="12dp"
+        android:textColor="#000000"
+        android:textColorHint="#777777"
+        app:layout_constraintTop_toBottomOf="@id/txtDescripcionRecuperar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="35dp"/>
+
+
+    <Button
+        android:id="@+id/btnSolicitarRecuperacion"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:text="Solicitar recuperación"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#D92F2F"
+        app:layout_constraintTop_toBottomOf="@id/edtCorreoRecuperar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="25dp"/>
+
+
+    <TextView
+        android:id="@+id/txtVolverLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Volver al inicio de sesión"
+        android:textColor="#D92F2F"
+        android:textSize="14sp"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintTop_toBottomOf="@id/btnSolicitarRecuperacion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="30dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
