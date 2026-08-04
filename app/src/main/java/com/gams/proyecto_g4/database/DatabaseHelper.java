@@ -9,7 +9,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "control_academico.db";
 
     //Si se modifica una tabla se tiene que aumentar el numero de la version de la base de datos
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -407,6 +407,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                         "('ESTUDIANTE', " +
                         "'Consulta información académica y realiza matrículas')"
+        );
+
+        db.execSQL(
+                "INSERT INTO usuario " +
+                        "(id_rol,nombre_usuario,correo,contrasena_hash) VALUES " +
+
+                        "(1,'admin','admin@gmail.com','1234')," +
+
+                        "(2,'docente','docente@gmail.com','1234')," +
+
+                        "(3,'estudiante','estudiante@gmail.com','1234')"
         );
     }
 

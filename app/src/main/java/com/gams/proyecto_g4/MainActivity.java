@@ -1,5 +1,6 @@
-package com.example.examenp2;
+package com.gams.proyecto_g4;
 
+import com.gams.proyecto_g4.dao.UsuarioDAO;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,14 +16,7 @@ public class MainActivity extends Activity {
     Button btnIniciarSesion;
     TextView txtRecuperar;
 
-    String usuarioAdmin = "admin";
-    String contrasenaAdmin = "1234";
 
-    String usuarioDocente = "docente";
-    String contrasenaDocente = "1234";
-
-    String usuarioEstudiante = "estudiante";
-    String contrasenaEstudiante = "1234";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,19 +50,27 @@ public class MainActivity extends Activity {
         String contrasena = edtContrasena.getText().toString().trim();
 
         if (usuario.isEmpty() || contrasena.isEmpty()) {
-            Toast.makeText(MainActivity.this, "Debe ingresar usuario y contraseña", Toast.LENGTH_SHORT).show();
 
-        } else if (usuario.equals(usuarioAdmin) && contrasena.equals(contrasenaAdmin)) {
-            abrirDashboard(usuario, "Administrador");
-
-        } else if (usuario.equals(usuarioDocente) && contrasena.equals(contrasenaDocente)) {
-            abrirDashboard(usuario, "Docente");
-
-        } else if (usuario.equals(usuarioEstudiante) && contrasena.equals(contrasenaEstudiante)) {
-            abrirDashboard(usuario, "Estudiante");
+            Toast.makeText(MainActivity.this,
+                    "Debe ingresar usuario y contraseña",
+                    Toast.LENGTH_SHORT).show();
 
         } else {
-            Toast.makeText(MainActivity.this, "Credenciales inválidas", Toast.LENGTH_SHORT).show();
+
+            UsuarioDAO usuarioDAO = new UsuarioDAO(MainActivity.this);
+
+            boolean valido = usuarioDAO.validarLogin(usuario, contrasena);
+
+            if (valido) {
+
+                abrirDashboard(usuario, "Usuario");
+
+            } else {
+
+                Toast.makeText(MainActivity.this,
+                        "Credenciales inválidas",
+                        Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

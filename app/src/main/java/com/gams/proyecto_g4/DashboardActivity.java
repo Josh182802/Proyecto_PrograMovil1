@@ -1,4 +1,4 @@
-package com.example.examenp2;
+package com.gams.proyecto_g4;
 
 import android.app.Activity;
 import android.os.Bundle;
