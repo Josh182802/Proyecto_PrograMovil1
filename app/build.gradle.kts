@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.gams.reportes"
+    namespace = "com.gams.proyecto_g4"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -11,7 +11,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.gams.reportes"
+        applicationId = "com.gams.proyecto_g4"
         minSdk = 36
         targetSdk = 36
         versionCode = 1

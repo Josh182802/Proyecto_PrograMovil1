@@ -1,4 +1,4 @@
-package com.gams.reportes.database;
+package com.gams.proyecto_g4.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,7 +8,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "control_academico.db";
 
-    //Si se modifican una tabla se tiene que aumentar el numero de la version de la base de datos
+    //Si se modifica una tabla se tiene que aumentar el numero de la version de la base de datos
     private static final int DATABASE_VERSION = 1;
 
     public DatabaseHelper(Context context) {
@@ -413,7 +413,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
-        //Para actualizar la estrctura de la base de datos cuando o si es que se cambian las tablas
+        //Para actualizar la estructura de la base de datos cuando o si es que se modifican las tablas
         db.execSQL("DROP TABLE IF EXISTS recuperacion_contrasena");
         db.execSQL("DROP TABLE IF EXISTS sesion");
         db.execSQL("DROP TABLE IF EXISTS calificacion");
