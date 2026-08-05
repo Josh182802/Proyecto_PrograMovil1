@@ -21,6 +21,8 @@ public class MatriculaActivity extends AppCompatActivity {
     private MatriculaDAO matriculaDAO;
     private MatriculaAdapter matriculaAdapter;
 
+    private Button btnVolver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +36,10 @@ public class MatriculaActivity extends AppCompatActivity {
         rvMatriculas.setLayoutManager(new LinearLayoutManager(this));
         matriculaAdapter = new MatriculaAdapter(new ArrayList<>());
         rvMatriculas.setAdapter(matriculaAdapter);
+
+        btnVolver = findViewById(R.id.btnVolver);
+
+        btnVolver.setOnClickListener(v -> finish());
 
         btnNuevaMatricula.setOnClickListener(view -> {
             Intent intent = new Intent(MatriculaActivity.this, FormularioMatriculaActivity.class);

@@ -9,7 +9,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "control_academico.db";
 
     //Si se modifica una tabla se tiene que aumentar el numero de la version de la base de datos
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -26,12 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db)
     {
-        db.execSQL(
-                "INSERT INTO usuario(nombre, usuario, contrasena, rol) " +
-                        "VALUES('Administrador', 'admin', '1234', 'Administrador')"
-        );
-
-        // 1. TABLA ROL
+        // 1. Tabla Rol
         db.execSQL(
                 "CREATE TABLE rol (" +
                         "id_rol INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -42,7 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         ")"
         );
 
-        // 2. TABLA USUARIO
+        // 2. Tabla Usuario
         db.execSQL(
                 "CREATE TABLE usuario (" +
                         "id_usuario INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -61,7 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         ")"
         );
 
-        // 3. TABLA CARRERA
+        // 3. Tabla Carrera
         db.execSQL(
                 "CREATE TABLE carrera (" +
                         "id_carrera INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -79,7 +74,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         ")"
         );
 
-        // 4. TABLA ESTUDIANTE
+        // 4. Tabla Estudiante
         db.execSQL(
                 "CREATE TABLE estudiante (" +
                         "id_estudiante INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -115,7 +110,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         ")"
         );
 
-        // 5. TABLA DOCENTE
+        // 5. Tabla Docente
         db.execSQL(
                 "CREATE TABLE docente (" +
                         "id_docente INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -142,7 +137,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         ")"
         );
 
-        // 6. TABLA PERIODO ACADÉMICO
+        // 6. Tabla Periodo Academico
         db.execSQL(
                 "CREATE TABLE periodo_academico (" +
                         "id_periodo INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -161,7 +156,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         ")"
         );
 
-        // 7. TABLA ASIGNATURA
+        // 7. Tabla Asignatura
         db.execSQL(
                 "CREATE TABLE asignatura (" +
                         "id_asignatura INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -190,7 +185,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         ")"
         );
 
-        // 8. TABLA MATRÍCULA
+        // 8. Tabla Matricula
         db.execSQL(
                 "CREATE TABLE matricula (" +
                         "id_matricula INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -222,7 +217,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         ")"
         );
 
-        // 9. TABLA DETALLE MATRÍCULA
+        // 9. Tabla Detalle Matricula
         db.execSQL(
                 "CREATE TABLE detalle_matricula (" +
                         "id_detalle_matricula INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -253,7 +248,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         ")"
         );
 
-        // 10. TABLA CALIFICACIÓN
+        // 10. Tabla Calificacion
         db.execSQL(
                 "CREATE TABLE calificacion (" +
                         "id_calificacion INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -306,7 +301,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         ")"
         );
 
-        // 11. TABLA SESIÓN
+        // 11. Tabla Sesion
         db.execSQL(
                 "CREATE TABLE sesion (" +
                         "id_sesion INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -324,7 +319,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         ")"
         );
 
-        // 12. TABLA RECUPERACIÓN DE CONTRASEÑA
+        // 12. Tabla Recuperacion de Contraseña
         db.execSQL(
                 "CREATE TABLE recuperacion_contrasena (" +
                         "id_recuperacion INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -423,6 +418,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         "(2,'docente','docente@gmail.com','1234')," +
 
                         "(3,'estudiante','estudiante@gmail.com','1234')"
+        );
+
+        db.execSQL(
+                "INSERT INTO carrera " +
+                        "(codigo_carrera, nombre, descripcion, duracion_anios) VALUES " +
+                        "('IS', 'Ingeniería en Sistemas', " +
+                        "'Carrera de tecnología y sistemas', 4)"
         );
     }
 

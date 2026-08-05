@@ -24,7 +24,7 @@ public class CarreraActivity extends AppCompatActivity {
     private RecyclerView rvCarreras;
     private TextView txtSinCarreras;
     private Button btnNuevaCarrera;
-
+    private Button btnVolver;
     private CarreraDAO carreraDAO;
     private CarreraAdapter carreraAdapter;
 
@@ -36,8 +36,7 @@ public class CarreraActivity extends AppCompatActivity {
         rvCarreras = findViewById(R.id.rvCarreras);
         txtSinCarreras = findViewById(R.id.txtSinCarreras);
         btnNuevaCarrera = findViewById(R.id.btnNuevaCarrera);
-
-        carreraDAO = new CarreraDAO(this);
+        btnVolver = findViewById(R.id.btnVolver);
 
         configurarRecyclerView();
 
@@ -49,6 +48,9 @@ public class CarreraActivity extends AppCompatActivity {
 
             startActivity(intent);
         });
+
+        btnVolver.setOnClickListener(v -> finish());
+        carreraDAO = new CarreraDAO(this);
     }
 
     private void configurarRecyclerView() {

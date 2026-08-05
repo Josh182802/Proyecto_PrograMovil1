@@ -7,7 +7,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="24dp"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:fitsSystemWindows="true"
+    android:background="#1D1D1D">
 
     <TextView
         android:layout_width="wrap_content"
@@ -15,33 +17,57 @@
         android:text="Reportes Académicos"
         android:textSize="26sp"
         android:textStyle="bold"
+        android:textColor="#FFFFFF"
         android:layout_marginBottom="30dp" />
 
     <Button
         android:id="@+id/btnRendimiento"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Rendimiento estudiantil" />
+        android:text="Rendimiento estudiantil"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#E02D2D"
+        android:textAllCaps="false" />
 
     <Button
         android:id="@+id/btnAsignaturas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="Asignaturas inscritas" />
+        android:text="Asignaturas inscritas"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#E02D2D"
+        android:textAllCaps="false" />
 
     <Button
         android:id="@+id/btnMatriculas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="Matrículas" />
+        android:text="Matrículas"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#E02D2D"
+        android:textAllCaps="false" />
 
     <Button
         android:id="@+id/btnEstadisticas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="Estadísticas generales" />
+        android:text="Estadísticas generales"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#E02D2D"
+        android:textAllCaps="false" />
+
+
+    <Button
+        android:id="@+id/btnRegresar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Regresar al menú principal"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#555555" />
 
 </LinearLayout>

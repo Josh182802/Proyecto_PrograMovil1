@@ -18,6 +18,7 @@ public class Reportes extends AppCompatActivity {
     private Button btnAsignaturas;
     private Button btnMatriculas;
     private Button btnEstadisticas;
+    private Button btnRegresar;
 
     private ReportesDAO reportesDAO;
 
@@ -26,15 +27,13 @@ public class Reportes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reportes);
 
-        DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        databaseHelper.getWritableDatabase();
-
         reportesDAO = new ReportesDAO(this);
 
         btnRendimiento = findViewById(R.id.btnRendimiento);
         btnAsignaturas = findViewById(R.id.btnAsignaturas);
         btnMatriculas = findViewById(R.id.btnMatriculas);
         btnEstadisticas = findViewById(R.id.btnEstadisticas);
+        btnRegresar = findViewById(R.id.btnRegresar);
 
         btnRendimiento.setOnClickListener(v ->
                 mostrarRendimientoEstudiantil()
@@ -51,6 +50,8 @@ public class Reportes extends AppCompatActivity {
         btnEstadisticas.setOnClickListener(v ->
                 mostrarEstadisticasGenerales()
         );
+
+        btnRegresar.setOnClickListener(v -> finish());
     }
 
     private void mostrarRendimientoEstudiantil() {
@@ -81,7 +82,7 @@ public class Reportes extends AppCompatActivity {
 
                 String nota = cursor.isNull(indiceNota)
                         ? "Pendiente"
-                        : String.valueOf(cursor.getDouble(indiceNota));
+                        : String.format(Locale.getDefault(), "%.2f", cursor.getDouble(indiceNota));
 
                 String estado = cursor.getString(
                         cursor.getColumnIndexOrThrow("resultado")

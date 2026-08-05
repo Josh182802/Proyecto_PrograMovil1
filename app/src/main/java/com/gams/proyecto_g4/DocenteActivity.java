@@ -24,7 +24,7 @@ public class DocenteActivity extends AppCompatActivity {
     private RecyclerView rvDocentes;
     private TextView txtSinDocentes;
     private Button btnNuevoDocente;
-
+    private Button btnVolver;
     private DocenteDAO docenteDAO;
     private DocenteAdapter docenteAdapter;
 
@@ -40,6 +40,10 @@ public class DocenteActivity extends AppCompatActivity {
         docenteDAO = new DocenteDAO(this);
 
         configurarRecyclerView();
+
+        btnVolver = findViewById(R.id.btnVolver);
+
+        btnVolver.setOnClickListener(v -> finish());
 
         btnNuevoDocente.setOnClickListener(view -> {
             Intent intent = new Intent(

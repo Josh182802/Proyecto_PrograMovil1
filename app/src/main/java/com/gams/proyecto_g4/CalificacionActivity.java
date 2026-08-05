@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,7 +22,7 @@ public class CalificacionActivity extends AppCompatActivity {
     private TextView txtSinCalificaciones;
     private CalificacionDAO calificacionDAO;
     private CalificacionAdapter calificacionAdapter;
-
+    private Button btnVolver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,10 @@ public class CalificacionActivity extends AppCompatActivity {
         rvCalificaciones = findViewById(R.id.rvCalificaciones);
         txtSinCalificaciones = findViewById(R.id.txtSinCalificaciones);
         calificacionDAO = new CalificacionDAO(this);
+
+        btnVolver = findViewById(R.id.btnVolver);
+
+        btnVolver.setOnClickListener(v -> finish());
 
         rvCalificaciones.setLayoutManager(new LinearLayoutManager(this));
         calificacionAdapter = new CalificacionAdapter(new ArrayList<>(), this::mostrarDialogoEdicion);

@@ -25,6 +25,8 @@ public class AsignaturaActivity extends AppCompatActivity {
     private TextView txtSinAsignaturas;
     private Button btnNuevaAsignatura;
 
+    private Button btnVolver;
+
     private AsignaturaDAO asignaturaDAO;
     private AsignaturaAdapter asignaturaAdapter;
 
@@ -36,6 +38,9 @@ public class AsignaturaActivity extends AppCompatActivity {
         rvAsignaturas = findViewById(R.id.rvAsignaturas);
         txtSinAsignaturas = findViewById(R.id.txtSinAsignaturas);
         btnNuevaAsignatura = findViewById(R.id.btnNuevaAsignatura);
+        btnVolver = findViewById(R.id.btnVolver);
+
+        btnVolver.setOnClickListener(v -> finish());
 
         asignaturaDAO = new AsignaturaDAO(this);
 

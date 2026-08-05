@@ -1,13 +1,14 @@
 package com.gams.proyecto_g4;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.content.Intent;
+
 import androidx.core.view.WindowCompat;
 
 import com.gams.proyecto_g4.dao.SesionDAO;
@@ -15,12 +16,26 @@ import com.gams.proyecto_g4.dao.UsuarioDAO;
 
 public class DashboardActivity extends Activity {
 
-    TextView txtUsuario, txtBienvenida, txtContenido, txtEstadisticas;
-    Button btnMenu, btnInicio, btnEstudiantes, btnDocentes, btnAsignaturas, btnCarreras;
-    Button btnMatriculas, btnCalificaciones, btnReportes, btnCerrarSesion;
+    TextView txtUsuario;
+    TextView txtBienvenida;
+    TextView txtContenido;
+    TextView txtEstadisticas;
+
+    Button btnMenu;
+    Button btnInicio;
+    Button btnEstudiantes;
+    Button btnDocentes;
+    Button btnAsignaturas;
+    Button btnCarreras;
+    Button btnMatriculas;
+    Button btnCalificaciones;
+    Button btnReportes;
+    Button btnCerrarSesion;
+
     LinearLayout menuHamburguesa;
 
-    String usuario, nivel;
+    String usuario;
+    String nivel;
     int idUsuario;
 
     SesionDAO sesionDAO;
@@ -30,7 +45,10 @@ public class DashboardActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        WindowCompat.setDecorFitsSystemWindows(getWindow(),true);
+        WindowCompat.setDecorFitsSystemWindows(
+                getWindow(),
+                true
+        );
 
         setContentView(R.layout.activity_dashboard);
 
@@ -52,80 +70,344 @@ public class DashboardActivity extends Activity {
 
         menuHamburguesa = findViewById(R.id.menuHamburguesa);
 
-        usuario = getIntent().getStringExtra("usuario");
-        nivel = getIntent().getStringExtra("nivel");
-
         usuarioDAO = new UsuarioDAO(this);
         sesionDAO = new SesionDAO(this);
 
+        usuario = getIntent().getStringExtra("usuario");
+        nivel = getIntent().getStringExtra("nivel");
+
         if (usuario == null || usuario.trim().isEmpty()) {
+
             Toast.makeText(
                     this,
                     "No se recibió el usuario. Inicie sesión nuevamente.",
                     Toast.LENGTH_LONG
             ).show();
 
-            Intent intent = new Intent(
-                    DashboardActivity.this,
-                    MainActivity.class
-            );
+            regresarLogin();
+            return;
+        }
 
-            startActivity(intent);
-            finish();
+        if (nivel == null || nivel.trim().isEmpty()) {
+
+            Toast.makeText(
+                    this,
+                    "El usuario no tiene un nivel válido.",
+                    Toast.LENGTH_LONG
+            ).show();
+
+            regresarLogin();
             return;
         }
 
         idUsuario = usuarioDAO.obtenerIdUsuario(usuario);
 
-        txtUsuario.setText("Usuario: " + usuario + " | Nivel: " + nivel);
-        txtBienvenida.setText("Bienvenido al Sistema Académico Universitario");
+        if (idUsuario == -1) {
 
+            Toast.makeText(
+                    this,
+                    "No se pudo obtener la información del usuario.",
+                    Toast.LENGTH_LONG
+            ).show();
 
-        btnMenu.setOnClickListener(view -> mostrarOcultarMenu());
+            regresarLogin();
+            return;
+        }
 
-        btnCerrarSesion.setOnClickListener(view -> cerrarSesion());
+        txtUsuario.setText(
+                "Usuario: " + usuario +
+                        " | Nivel: " + nivel
+        );
 
-        btnInicio.setOnClickListener(view -> mostrarInicio());
-        btnEstudiantes.setOnClickListener(view -> mostrarEstudiantes());
-        btnDocentes.setOnClickListener(view -> mostrarDocentes());
-        btnAsignaturas.setOnClickListener(view -> mostrarAsignaturas());
-        btnCarreras.setOnClickListener(view -> mostrarCarreras());
-        btnMatriculas.setOnClickListener(view -> mostrarMatriculas());
-        btnCalificaciones.setOnClickListener(view -> mostrarCalificaciones());
-        btnReportes.setOnClickListener(view -> mostrarReportes());
+        txtBienvenida.setText(
+                "Bienvenido al Sistema Académico Universitario"
+        );
+
+        configurarMenuSegunNivel();
+
+        // Eventos
+        btnMenu.setOnClickListener(view ->
+                mostrarOcultarMenu()
+        );
+
+        btnCerrarSesion.setOnClickListener(view ->
+                cerrarSesion()
+        );
+
+        btnInicio.setOnClickListener(view ->
+                mostrarInicio()
+        );
+
+        btnEstudiantes.setOnClickListener(view ->
+                mostrarEstudiantes()
+        );
+
+        btnDocentes.setOnClickListener(view ->
+                mostrarDocentes()
+        );
+
+        btnAsignaturas.setOnClickListener(view ->
+                mostrarAsignaturas()
+        );
+
+        btnCarreras.setOnClickListener(view ->
+                mostrarCarreras()
+        );
+
+        btnMatriculas.setOnClickListener(view ->
+                mostrarMatriculas()
+        );
+
+        btnCalificaciones.setOnClickListener(view ->
+                mostrarCalificaciones()
+        );
+
+        btnReportes.setOnClickListener(view ->
+                mostrarReportes()
+        );
     }
 
+    private void configurarMenuSegunNivel() {
+
+        if (nivel.equalsIgnoreCase("ADMINISTRADOR")) {
+
+            btnEstudiantes.setVisibility(View.VISIBLE);
+            btnDocentes.setVisibility(View.VISIBLE);
+            btnAsignaturas.setVisibility(View.VISIBLE);
+            btnCarreras.setVisibility(View.VISIBLE);
+            btnMatriculas.setVisibility(View.VISIBLE);
+            btnCalificaciones.setVisibility(View.VISIBLE);
+            btnReportes.setVisibility(View.VISIBLE);
+
+        } else if (nivel.equalsIgnoreCase("DOCENTE")) {
+
+            btnEstudiantes.setVisibility(View.VISIBLE);
+            btnDocentes.setVisibility(View.GONE);
+            btnAsignaturas.setVisibility(View.VISIBLE);
+            btnCarreras.setVisibility(View.GONE);
+            btnMatriculas.setVisibility(View.GONE);
+            btnCalificaciones.setVisibility(View.VISIBLE);
+            btnReportes.setVisibility(View.VISIBLE);
+
+        } else if (nivel.equalsIgnoreCase("ESTUDIANTE")) {
+
+            btnEstudiantes.setVisibility(View.GONE);
+            btnDocentes.setVisibility(View.GONE);
+            btnAsignaturas.setVisibility(View.GONE);
+            btnCarreras.setVisibility(View.GONE);
+            btnMatriculas.setVisibility(View.VISIBLE);
+            btnCalificaciones.setVisibility(View.VISIBLE);
+            btnReportes.setVisibility(View.VISIBLE);
+
+        } else {
+
+            Toast.makeText(
+                    this,
+                    "Nivel de usuario no reconocido.",
+                    Toast.LENGTH_LONG
+            ).show();
+
+            regresarLogin();
+        }
+    }
 
     private void mostrarOcultarMenu() {
 
         if (menuHamburguesa.getVisibility() == View.GONE) {
+
             menuHamburguesa.setVisibility(View.VISIBLE);
+
         } else {
+
             menuHamburguesa.setVisibility(View.GONE);
         }
-
     }
 
-
     private void cerrarMenu() {
+
         menuHamburguesa.setVisibility(View.GONE);
     }
 
+    private void mostrarInicio() {
+
+        txtContenido.setText(
+                "Inicio\n\n" +
+                        "Bienvenido al panel principal del Sistema Móvil " +
+                        "para el Control Académico Universitario."
+        );
+
+        cerrarMenu();
+    }
+
+    private void mostrarEstudiantes() {
+
+        if (nivel.equalsIgnoreCase("ESTUDIANTE")) {
+
+            mostrarSinPermiso(
+                    "No tiene permiso para acceder al módulo de estudiantes."
+            );
+
+            return;
+        }
+
+        cerrarMenu();
+
+        Intent intent = new Intent(
+                DashboardActivity.this,
+                EstudianteActivity.class
+        );
+
+        enviarDatosUsuario(intent);
+
+        startActivity(intent);
+    }
+
+    private void mostrarDocentes() {
+
+        if (!nivel.equalsIgnoreCase("ADMINISTRADOR")) {
+
+            mostrarSinPermiso(
+                    "Solo el administrador puede acceder al módulo de docentes."
+            );
+
+            return;
+        }
+
+        cerrarMenu();
+
+        Intent intent = new Intent(
+                DashboardActivity.this,
+                DocenteActivity.class
+        );
+
+        enviarDatosUsuario(intent);
+
+        startActivity(intent);
+    }
+
+    private void mostrarAsignaturas() {
+
+        if (nivel.equalsIgnoreCase("ESTUDIANTE")) {
+
+            mostrarSinPermiso(
+                    "No tiene permiso para administrar asignaturas."
+            );
+
+            return;
+        }
+
+        cerrarMenu();
+
+        Intent intent = new Intent(
+                DashboardActivity.this,
+                AsignaturaActivity.class
+        );
+
+        enviarDatosUsuario(intent);
+
+        startActivity(intent);
+    }
+
+    private void mostrarCarreras() {
+
+        if (!nivel.equalsIgnoreCase("ADMINISTRADOR")) {
+
+            mostrarSinPermiso(
+                    "Solo el administrador puede acceder al módulo de carreras."
+            );
+
+            return;
+        }
+
+        cerrarMenu();
+
+        Intent intent = new Intent(
+                DashboardActivity.this,
+                CarreraActivity.class
+        );
+
+        enviarDatosUsuario(intent);
+
+        startActivity(intent);
+    }
+
+    private void mostrarMatriculas() {
+
+        cerrarMenu();
+
+        Intent intent = new Intent(
+                DashboardActivity.this,
+                MatriculaActivity.class
+        );
+
+        enviarDatosUsuario(intent);
+
+        startActivity(intent);
+    }
+
+    private void mostrarCalificaciones() {
+
+        cerrarMenu();
+
+        Intent intent = new Intent(
+                DashboardActivity.this,
+                CalificacionActivity.class
+        );
+
+        enviarDatosUsuario(intent);
+
+        startActivity(intent);
+    }
+
+    private void mostrarReportes() {
+
+        cerrarMenu();
+
+        Intent intent = new Intent(
+                DashboardActivity.this,
+                Reportes.class
+        );
+
+        enviarDatosUsuario(intent);
+
+        startActivity(intent);
+    }
+
+    private void enviarDatosUsuario(Intent intent) {
+
+        intent.putExtra("id_usuario", idUsuario);
+        intent.putExtra("usuario", usuario);
+        intent.putExtra("nivel", nivel);
+    }
+
+    private void mostrarSinPermiso(String mensaje) {
+
+        Toast.makeText(
+                this,
+                mensaje,
+                Toast.LENGTH_SHORT
+        ).show();
+
+        cerrarMenu();
+    }
 
     private void cerrarSesion() {
 
         if (idUsuario != -1) {
 
             sesionDAO.cerrarSesion(idUsuario);
-
         }
 
         Toast.makeText(
                 this,
-                "Sesión cerrada correctamente",
+                "Sesión cerrada correctamente.",
                 Toast.LENGTH_SHORT
         ).show();
 
+        regresarLogin();
+    }
+
+    private void regresarLogin() {
 
         Intent intent = new Intent(
                 DashboardActivity.this,
@@ -138,87 +420,6 @@ public class DashboardActivity extends Activity {
         );
 
         startActivity(intent);
-
-    }
-
-
-    private void mostrarInicio() {
-        txtContenido.setText(
-                "Inicio\n\n" +
-                        "Bienvenido al panel principal del Sistema Móvil para el Control Académico Universitario."
-        );
-
-        cerrarMenu();
-    }
-
-
-    private void mostrarEstudiantes() {
-        cerrarMenu();
-
-        Intent intent = new Intent(
-                DashboardActivity.this,
-                EstudianteActivity.class
-        );
-
-        startActivity(intent);
-    }
-
-
-    private void mostrarDocentes() {
-        cerrarMenu();
-
-        Intent intent = new Intent(
-                DashboardActivity.this,
-                DocenteActivity.class
-        );
-
-        startActivity(intent);
-    }
-
-
-    private void mostrarAsignaturas() {
-        cerrarMenu();
-
-        Intent intent = new Intent(
-                DashboardActivity.this,
-                AsignaturaActivity.class
-        );
-
-        startActivity(intent);
-    }
-
-
-    private void mostrarCarreras() {
-        cerrarMenu();
-
-        Intent intent = new Intent(
-                DashboardActivity.this,
-                CarreraActivity.class
-        );
-
-        startActivity(intent);
-    }
-
-
-    private void mostrarMatriculas() {
-        cerrarMenu();
-        Intent intent = new Intent(DashboardActivity.this, MatriculaActivity.class);
-        startActivity(intent);
-    }
-
-
-    private void mostrarCalificaciones() {
-        cerrarMenu();
-        Intent intent = new Intent(DashboardActivity.this, CalificacionActivity.class);
-        startActivity(intent);
-    }
-
-
-    private void mostrarReportes() {
-        txtContenido.setText(
-                "Módulo de Reportes\n\nInformación académica general."
-        );
-
-        cerrarMenu();
+        finish();
     }
 }

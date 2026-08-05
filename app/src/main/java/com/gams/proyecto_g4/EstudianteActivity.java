@@ -28,6 +28,7 @@ public class EstudianteActivity extends AppCompatActivity {
     private TextView txtSinEstudiantes;
     private EditText edtBuscarEstudiante;
     private Button btnNuevoEstudiante;
+    private Button btnVolver;
 
     private EstudianteDAO estudianteDAO;
     private EstudianteAdapter estudianteAdapter;
@@ -40,6 +41,10 @@ public class EstudianteActivity extends AppCompatActivity {
         inicializarComponentes();
         configurarRecyclerView();
         configurarBuscador();
+
+        btnVolver = findViewById(R.id.btnVolver);
+
+        btnVolver.setOnClickListener(v -> finish());
 
         btnNuevoEstudiante.setOnClickListener(view -> {
             Intent intent = new Intent(

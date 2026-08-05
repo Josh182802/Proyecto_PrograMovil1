@@ -111,6 +111,7 @@ public class ReportesDAO {
                         "ON m.id_estudiante = e.id_estudiante " +
                         "INNER JOIN asignatura a " +
                         "ON dm.id_asignatura = a.id_asignatura " +
+                        "WHERE dm.estado <> 'CANCELADA' " +
                         "ORDER BY e.apellidos, e.nombres";
 
         return db.rawQuery(consulta, null);
@@ -127,8 +128,9 @@ public class ReportesDAO {
                         "FROM periodo_academico p " +
                         "LEFT JOIN matricula m " +
                         "ON p.id_periodo = m.id_periodo " +
+                        "AND m.estado = 'ACTIVA' " +
                         "GROUP BY p.id_periodo, p.nombre, p.anio_academico " +
-                        "ORDER BY p.anio_academico DESC";
+                        "ORDER BY p.anio_academico DESC, p.id_periodo DESC";
 
         return db.rawQuery(consulta, null);
     }
