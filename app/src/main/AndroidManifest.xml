@@ -47,6 +47,14 @@
             android:exported="false" />
 
         <activity
+            android:name=".FormularioEstudianteActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".EstudianteActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".MainActivity"
             android:exported="true">
 
