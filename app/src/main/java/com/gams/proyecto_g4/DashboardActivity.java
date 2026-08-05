@@ -201,20 +201,16 @@ public class DashboardActivity extends Activity {
 
 
     private void mostrarMatriculas() {
-        txtContenido.setText(
-                "Módulo de Matrículas\n\nGestión de matrículas."
-        );
-
         cerrarMenu();
+        Intent intent = new Intent(DashboardActivity.this, MatriculaActivity.class);
+        startActivity(intent);
     }
 
 
     private void mostrarCalificaciones() {
-        txtContenido.setText(
-                "Módulo de Calificaciones\n\nRegistro de notas."
-        );
-
         cerrarMenu();
+        Intent intent = new Intent(DashboardActivity.this, CalificacionActivity.class);
+        startActivity(intent);
     }
 
 
