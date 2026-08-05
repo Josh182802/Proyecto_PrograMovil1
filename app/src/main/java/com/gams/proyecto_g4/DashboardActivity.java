@@ -174,11 +174,14 @@ public class DashboardActivity extends Activity {
 
 
     private void mostrarAsignaturas() {
-        txtContenido.setText(
-                "Módulo de Asignaturas\n\nGestión de asignaturas."
+        cerrarMenu();
+
+        Intent intent = new Intent(
+                DashboardActivity.this,
+                AsignaturaActivity.class
         );
 
-        cerrarMenu();
+        startActivity(intent);
     }
 
 
