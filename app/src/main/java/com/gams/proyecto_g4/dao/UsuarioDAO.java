@@ -3,6 +3,7 @@ package com.gams.proyecto_g4.dao;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.content.ContentValues;
 
 import com.gams.proyecto_g4.database.DatabaseHelper;
 
@@ -74,5 +75,63 @@ public class UsuarioDAO {
         db.close();
 
         return rol;
+    }
+
+    public long insertarUsuario(int idRol, String nombreUsuario, String correo, String contrasena) {
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues valores = new ContentValues();
+        valores.put("id_rol", idRol);
+        valores.put("nombre_usuario", nombreUsuario);
+        valores.put("correo", correo);
+        valores.put("contrasena_hash", contrasena);
+        valores.put("estado", 1);
+
+        long idUsuario = db.insert(
+                "usuario",
+                null,
+                valores
+        );
+
+        db.close();
+
+        return idUsuario;
+    }
+
+    public boolean existeNombreUsuario(String nombreUsuario) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT id_usuario " +
+                        "FROM usuario " +
+                        "WHERE nombre_usuario = ?",
+                new String[]{nombreUsuario}
+        );
+
+        boolean existe = cursor.moveToFirst();
+
+        cursor.close();
+        db.close();
+
+        return existe;
+    }
+
+    public boolean existeCorreo(String correo) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT id_usuario " +
+                        "FROM usuario " +
+                        "WHERE correo = ?",
+                new String[]{correo}
+        );
+
+        boolean existe = cursor.moveToFirst();
+
+        cursor.close();
+        db.close();
+
+        return existe;
     }
 }

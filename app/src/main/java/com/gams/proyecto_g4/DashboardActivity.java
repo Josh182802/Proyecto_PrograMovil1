@@ -162,11 +162,14 @@ public class DashboardActivity extends Activity {
 
 
     private void mostrarDocentes() {
-        txtContenido.setText(
-                "Módulo de Docentes\n\nAdministración de docentes registrados."
+        cerrarMenu();
+
+        Intent intent = new Intent(
+                DashboardActivity.this,
+                DocenteActivity.class
         );
 
-        cerrarMenu();
+        startActivity(intent);
     }
 
 
