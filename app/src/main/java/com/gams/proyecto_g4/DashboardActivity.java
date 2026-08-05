@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Intent;
+import androidx.core.view.WindowCompat;
 
 import com.gams.proyecto_g4.dao.SesionDAO;
 import com.gams.proyecto_g4.dao.UsuarioDAO;
@@ -28,6 +29,8 @@ public class DashboardActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        WindowCompat.setDecorFitsSystemWindows(getWindow(),true);
 
         setContentView(R.layout.activity_dashboard);
 
@@ -54,6 +57,23 @@ public class DashboardActivity extends Activity {
 
         usuarioDAO = new UsuarioDAO(this);
         sesionDAO = new SesionDAO(this);
+
+        if (usuario == null || usuario.trim().isEmpty()) {
+            Toast.makeText(
+                    this,
+                    "No se recibió el usuario. Inicie sesión nuevamente.",
+                    Toast.LENGTH_LONG
+            ).show();
+
+            Intent intent = new Intent(
+                    DashboardActivity.this,
+                    MainActivity.class
+            );
+
+            startActivity(intent);
+            finish();
+            return;
+        }
 
         idUsuario = usuarioDAO.obtenerIdUsuario(usuario);
 
@@ -160,11 +180,14 @@ public class DashboardActivity extends Activity {
 
 
     private void mostrarCarreras() {
-        txtContenido.setText(
-                "Módulo de Carreras\n\nGestión de carreras."
+        cerrarMenu();
+
+        Intent intent = new Intent(
+                DashboardActivity.this,
+                CarreraActivity.class
         );
 
-        cerrarMenu();
+        startActivity(intent);
     }
 
 

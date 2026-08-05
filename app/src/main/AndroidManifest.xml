@@ -23,6 +23,14 @@
             android:name=".Reportes" />
 
         <activity
+            android:name=".FormularioCarreraActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CarreraActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".MainActivity"
             android:exported="true">
 

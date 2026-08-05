@@ -26,6 +26,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db)
     {
+        db.execSQL(
+                "INSERT INTO usuario(nombre, usuario, contrasena, rol) " +
+                        "VALUES('Administrador', 'admin', '1234', 'Administrador')"
+        );
+
         // 1. TABLA ROL
         db.execSQL(
                 "CREATE TABLE rol (" +

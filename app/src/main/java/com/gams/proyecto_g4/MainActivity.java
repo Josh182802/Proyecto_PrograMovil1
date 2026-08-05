@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
         usuarioDAO = new UsuarioDAO(this);
         sesionDAO = new SesionDAO(this);
 
-        if (sesionDAO.existeSesionActiva()) {
+        /*if (sesionDAO.existeSesionActiva()) {
 
             Intent intent = new Intent(
                     MainActivity.this,
@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
             finish();
 
             return;
-        }
+        }*/
 
         setContentView(R.layout.activity_main);
 
