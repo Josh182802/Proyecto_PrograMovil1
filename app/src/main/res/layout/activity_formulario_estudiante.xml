@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1B1B1B"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/txtTituloFormularioEstudiante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrar estudiante"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Datos de acceso"
+            android:textColor="#D32F2F"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp" />
+
+        <EditText
+            android:id="@+id/edtUsuarioEstudiante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre de usuario"
+            android:textColor="#000000"
+            android:textColorHint="#666666"
+            android:background="#FFFFFF"
+            android:padding="14dp"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/edtCorreoEstudiante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Correo electrónico"
+            android:textColor="#000000"
+            android:textColorHint="#666666"
+            android:background="#FFFFFF"
+            android:padding="14dp"
+            android:inputType="textEmailAddress"
+            android:layout_marginTop="12dp" />
+
+        <EditText
+            android:id="@+id/edtContrasenaEstudiante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contraseña"
+            android:textColor="#000000"
+            android:textColorHint="#666666"
+            android:background="#FFFFFF"
+            android:padding="14dp"
+            android:inputType="textPassword"
+            android:layout_marginTop="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Información académica"
+            android:textColor="#D32F2F"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Carrera"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:layout_marginBottom="5dp" />
+
+        <Spinner
+            android:id="@+id/spnCarreraEstudiante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:padding="12dp" />
+
+        <EditText
+            android:id="@+id/edtCuentaEstudiante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Número de cuenta"
+            android:textColor="#000000"
+            android:textColorHint="#666666"
+            android:background="#FFFFFF"
+            android:padding="14dp"
+            android:inputType="text"
+            android:layout_marginTop="12dp" />
+
+        <EditText
+            android:id="@+id/edtNombresEstudiante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombres"
+            android:textColor="#000000"
+            android:textColorHint="#666666"
+            android:background="#FFFFFF"
+            android:padding="14dp"
+            android:inputType="textCapWords"
+            android:layout_marginTop="12dp" />
+
+        <EditText
+            android:id="@+id/edtApellidosEstudiante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Apellidos"
+            android:textColor="#000000"
+            android:textColorHint="#666666"
+            android:background="#FFFFFF"
+            android:padding="14dp"
+            android:inputType="textCapWords"
+            android:layout_marginTop="12dp" />
+
+        <EditText
+            android:id="@+id/edtIdentidadEstudiante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Número de identidad"
+            android:textColor="#000000"
+            android:textColorHint="#666666"
+            android:background="#FFFFFF"
+            android:padding="14dp"
+            android:inputType="number"
+            android:maxLength="13"
+            android:layout_marginTop="12dp" />
+
+        <EditText
+            android:id="@+id/edtFechaNacimientoEstudiante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fecha de nacimiento: AAAA-MM-DD"
+            android:textColor="#000000"
+            android:textColorHint="#666666"
+            android:background="#FFFFFF"
+            android:padding="14dp"
+            android:inputType="date"
+            android:layout_marginTop="12dp" />
+
+        <EditText
+            android:id="@+id/edtDireccionEstudiante"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="Dirección"
+            android:textColor="#000000"
+            android:textColorHint="#666666"
+            android:background="#FFFFFF"
+            android:padding="14dp"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:layout_marginTop="12dp" />
+
+        <EditText
+            android:id="@+id/edtTelefonoEstudiante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Teléfono"
+            android:textColor="#000000"
+            android:textColorHint="#666666"
+            android:background="#FFFFFF"
+            android:padding="14dp"
+            android:inputType="phone"
+            android:maxLength="8"
+            android:layout_marginTop="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Estado académico"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="5dp" />
+
+        <Spinner
+            android:id="@+id/spnEstadoEstudiante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:padding="12dp" />
+
+        <Button
+            android:id="@+id/btnGuardarEstudiante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:backgroundTint="#D32F2F"
+            android:layout_marginTop="24dp" />
+
+        <Button
+            android:id="@+id/btnCancelarEstudiante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancelar"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:backgroundTint="#424242"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+
+</ScrollView>

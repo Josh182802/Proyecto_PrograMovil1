@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/txtEstudianteCalificacionItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre del Estudiante"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txtAsignaturaCalificacionItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Asignatura: Programación"
+            android:paddingTop="4dp" />
+
+        <TextView
+            android:id="@+id/txtNotaFinalCalificacionItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nota Final: 0.00"
+            android:paddingTop="2dp" />
+
+        <TextView
+            android:id="@+id/txtResultadoCalificacionItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Estado: PENDIENTE"
+            android:paddingTop="2dp" />
+
+        <Button
+            android:id="@+id/btnEditarCalificacionItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="8dp"
+            android:text="Editar Notas" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
