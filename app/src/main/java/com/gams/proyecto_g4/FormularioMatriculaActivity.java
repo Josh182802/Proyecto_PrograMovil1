@@ -53,21 +53,39 @@ public class FormularioMatriculaActivity extends AppCompatActivity {
         btnCancelar.setOnClickListener(v -> finish());
     }
 
+    // Variables de clase necesarias
+    private List<Estudiante> listaEstudiantesFiltrada = new ArrayList<>();
+
     private void cargarSpinners() {
-        // 1. Estudiantes
-        listaEstudiantes = estudianteDAO.listar();
+        // 1. Estudiantes (Solo Activos)
+        List<Estudiante> todosEstudiantes = estudianteDAO.listar();
+        listaEstudiantesFiltrada.clear();
         List<String> nombresEst = new ArrayList<>();
-        for (Estudiante e : listaEstudiantes) {
-            if ("ACTIVO".equals(e.getEstadoAcademico())) {
+
+        for (Estudiante e : todosEstudiantes) {
+            if ("ACTIVO".equalsIgnoreCase(e.getEstadoAcademico())) {
+                listaEstudiantesFiltrada.add(e);
                 nombresEst.add(e.getNombreCompleto() + " (" + e.getNumeroCuenta() + ")");
             }
         }
-        spnEstudiantes.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, nombresEst));
 
-        // 2. Períodos Académicos
+        if (nombresEst.isEmpty()) {
+            nombresEst.add("No hay estudiantes activos");
+        }
+
+        ArrayAdapter<String> adapterEst = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item, nombresEst);
+        adapterEst.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnEstudiantes.setAdapter(adapterEst);
+
+        // 2. Períodos Académicos (Acepta estado 1 o 'ACTIVO')
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursorP = db.rawQuery("SELECT id_periodo, nombre, anio_academico FROM periodo_academico WHERE estado = 1", null);
+        listaIdsPeriodos.clear();
         List<String> nombresP = new ArrayList<>();
+
+        Cursor cursorP = db.rawQuery(
+                "SELECT id_periodo, nombre, anio_academico FROM periodo_academico WHERE estado = 1 OR estado = 'ACTIVO'", null);
+
         if (cursorP.moveToFirst()) {
             do {
                 listaIdsPeriodos.add(cursorP.getInt(0));
@@ -75,11 +93,23 @@ public class FormularioMatriculaActivity extends AppCompatActivity {
             } while (cursorP.moveToNext());
         }
         cursorP.close();
-        spnPeriodos.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, nombresP));
 
-        // 3. Asignaturas
-        Cursor cursorA = db.rawQuery("SELECT id_asignatura, nombre, codigo_asignatura FROM asignatura WHERE estado = 1", null);
+        if (nombresP.isEmpty()) {
+            nombresP.add("No hay períodos activos");
+        }
+
+        ArrayAdapter<String> adapterPeriodo = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item, nombresP);
+        adapterPeriodo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnPeriodos.setAdapter(adapterPeriodo);
+
+        // 3. Asignaturas (Acepta estado 1 o 'ACTIVA')
+        listaIdsAsignaturas.clear();
         List<String> nombresA = new ArrayList<>();
+
+        Cursor cursorA = db.rawQuery(
+                "SELECT id_asignatura, nombre, codigo_asignatura FROM asignatura WHERE estado = 1 OR estado = 'ACTIVA' OR estado = 'ACTIVO'", null);
+
         if (cursorA.moveToFirst()) {
             do {
                 listaIdsAsignaturas.add(cursorA.getInt(0));
@@ -88,21 +118,38 @@ public class FormularioMatriculaActivity extends AppCompatActivity {
         }
         cursorA.close();
         db.close();
-        spnAsignaturas.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, nombresA));
+
+        if (nombresA.isEmpty()) {
+            nombresA.add("No hay asignaturas activas");
+        }
+
+        ArrayAdapter<String> adapterAsig = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item, nombresA);
+        adapterAsig.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnAsignaturas.setAdapter(adapterAsig);
     }
 
     private void guardarMatricula() {
-        if (spnEstudiantes.getSelectedItemPosition() < 0 || listaIdsPeriodos.isEmpty() || listaIdsAsignaturas.isEmpty()) {
-            Toast.makeText(this, "Asegúrese de contar con estudiantes, períodos y asignaturas activas", Toast.LENGTH_LONG).show();
+        if (listaEstudiantesFiltrada.isEmpty() || listaIdsPeriodos.isEmpty() || listaIdsAsignaturas.isEmpty()) {
+            Toast.makeText(this, "Debe registrar y activar estudiantes, períodos y asignaturas primero", Toast.LENGTH_LONG).show();
             return;
         }
 
-        Estudiante est = listaEstudiantes.get(spnEstudiantes.getSelectedItemPosition());
-        int idPeriodo = listaIdsPeriodos.get(spnPeriodos.getSelectedItemPosition());
-        int idAsignatura = listaIdsAsignaturas.get(spnAsignaturas.getSelectedItemPosition());
+        int posEst = spnEstudiantes.getSelectedItemPosition();
+        int posPer = spnPeriodos.getSelectedItemPosition();
+        int posAsig = spnAsignaturas.getSelectedItemPosition();
+
+        if (posEst < 0 || posPer < 0 || posAsig < 0) {
+            Toast.makeText(this, "Selección inválida", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Estudiante est = listaEstudiantesFiltrada.get(posEst);
+        int idPeriodo = listaIdsPeriodos.get(posPer);
+        int idAsignatura = listaIdsAsignaturas.get(posAsig);
 
         if (matriculaDAO.existeMatriculaEnPeriodo(est.getIdEstudiante(), idPeriodo)) {
-            Toast.makeText(this, "El estudiante ya cuenta con una matrícula en este período", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "El estudiante ya está matriculado en este período", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -112,10 +159,10 @@ public class FormularioMatriculaActivity extends AppCompatActivity {
 
         long res = matriculaDAO.registrarMatriculaConAsignaturas(matricula, asignaturas);
         if (res != -1) {
-            Toast.makeText(this, "Matrícula registrada exitosamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Matrícula registrada correctamente", Toast.LENGTH_SHORT).show();
             finish();
         } else {
-            Toast.makeText(this, "Error al guardar matrícula", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error al procesar la matrícula", Toast.LENGTH_SHORT).show();
         }
     }
 }

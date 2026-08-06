@@ -426,6 +426,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         "('IS', 'Ingeniería en Sistemas', " +
                         "'Carrera de tecnología y sistemas', 4)"
         );
+
+        // 1. Datos iniciales para Periodo Académico
+        db.execSQL(
+                "INSERT INTO periodo_academico (nombre, anio_academico, fecha_inicio, fecha_finalizacion, estado) VALUES " +
+                        "('I PAC', 2026, '2026-01-15', '2026-05-15', 1), " +
+                        "('II PAC', 2026, '2026-06-01', '2026-09-15', 1)"
+        );
+
+        // 2. Datos iniciales para Estudiante (Asociado al id_usuario = 3 y id_carrera = 1)
+        db.execSQL(
+                "INSERT INTO estudiante (id_usuario, id_carrera, numero_cuenta, nombres, apellidos, numero_identidad, estado_academico) VALUES " +
+                        "(3, 1, '20261001001', 'Juan Carlos', 'Pérez Gómez', '0801200001234', 'ACTIVO')"
+        );
+
+        // 3. Datos iniciales para Docente (Asociado al id_usuario = 2)
+        db.execSQL(
+                "INSERT INTO docente (id_usuario, codigo_docente, nombres, apellidos, numero_identidad, estado_laboral) VALUES " +
+                        "(2, 'DOC001', 'Carlos Manuel', 'López Martínez', '0801198500432', 'ACTIVO')"
+        );
+
+        // 4. Datos iniciales para Asignatura (Asociada a id_carrera = 1 e id_docente = 1)
+        db.execSQL(
+                "INSERT INTO asignatura (id_carrera, id_docente, codigo_asignatura, nombre, unidades_valorativas, estado) VALUES " +
+                        "(1, 1, 'IS-101', 'Programación I', 4, 1), " +
+                        "(1, 1, 'IS-201', 'Bases de Datos I', 5, 1)"
+        );
+
     }
 
     @Override

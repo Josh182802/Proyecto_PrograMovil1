@@ -27,7 +27,7 @@
             android:layout_height="48dp"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="16dp"
-            android:backgroundTint="#E02D2D" />
+            android:background="#FFFFFF" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
             android:layout_height="48dp"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="16dp"
-            android:backgroundTint="#E02D2D" />
+            android:background="#FFFFFF" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
             android:layout_height="48dp"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="16dp"
-            android:backgroundTint="#E02D2D" />
+            android:background="#FFFFFF" />
 
         <EditText
             android:id="@+id/edtObservacionesMatricula"
@@ -69,9 +69,9 @@
             android:inputType="textMultiLine"
             android:minLines="3"
             android:gravity="top"
-            android:textColor="#FFFFFF"
+            android:textColor="#000000"
             android:textColorHint="#A0A0A0"
-            android:backgroundTint="#E02D2D"
+            android:background="#FFFFFF"
             android:layout_marginBottom="24dp" />
 
         <LinearLayout
